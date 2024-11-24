@@ -1,0 +1,39 @@
+# Dependency directories
+/vendor/
+/storage/
+
+# PHP Composer files (if you're using Composer for dependency management)
+composer.lock
+composer.phar
+
+# Logs
+*.log
+*.out
+
+# PHP session files
+/sessions/
+
+# Environment configuration files (e.g., for local development)
+.env
+
+# IDE and editor configuration files
+/.idea/
+/.vscode/
+/*.sublime-project
+
+# Operating system specific files
+.DS_Store        # macOS
+Thumbs.db        # Windows
+
+# Build directories
+/build/
+/dist/
+
+# PHPUnit coverage reports
+phpunit.xml
+phpunit.xml.dist
+coverage/
+
+# Temporary files
+*.swp
+*.bak

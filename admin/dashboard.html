@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dashboard</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="./admin.css">
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/13f9a71649.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="conttt">
+        <div class="sidebar">
+            <div class="mob">
+                <span class="activve" onclick="insight(this)" id="si"><i class="fa-solid fa-info"></i></span>
+                <span onclick="evet(this)" id="ev"><i class="fa-solid fa-calendar-days"></i></span>
+                <span onclick="testi(this)" id="tes"><i class="fa-solid fa-book-bookmark"></i></span>
+                <span onclick="payy(this)" id="pa"><i class="fa-solid fa-coins"></i></span>
+                <span onclick="mailss(this)" id="ml"><i class="fa-solid fa-envelope"></i></span>
+                <span><a href="./logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></span>
+            </div>
+            <span class="ll">
+                <img src="../assets/images/logo.png" alt=""> KGCF
+            </span>
+            <div class="dex">
+                <span class="activve" onclick="insight(this)" id="si"><i class="fa-solid fa-info"></i><p>Insights</p></span>
+                <span onclick="evet(this)" id="ev"><i class="fa-solid fa-calendar-days"></i><p>Events</p></span>
+                <span onclick="testi(this)" id="tes"><i class="fa-solid fa-book-bookmark"></i><p>Testimony</p></span>
+                <span onclick="payy(this)" id="pa"><i class="fa-solid fa-coins"></i><p>Payment</p></span>
+                <span onclick="mailss(this)" id="ml"><i class="fa-solid fa-envelope"></i><p>Mails</p></span>
+                <span><a href="./logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i><p>Logout</p></a></span>
+            </div>
+        </div>
+        <div class="screen">
+            <div class="insights" id="insights">
+                <h1>Insights</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Page Name</th>
+                            <th>Visitors</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($stats as $stat) : ?>
+                            <tr>
+                                <td style='text-transform:Capitalize;' ><?php echo htmlspecialchars($stat['page']); ?> Page</td>
+                                <td><?php echo htmlspecialchars($stat['visitor_count']); ?></td>
+                                <td><?php echo htmlspecialchars($stat['date']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="events" id="events">
+                <h1>Events</h1>
+                <!--<form action="./event.create.php" method="post" enctype="multipart/form-data" class="event-form grid">-->
+                <!--    <input type="text" name="title" placeholder="Title">-->
+                <!--    <input type="text" name="description" placeholder="Description">-->
+                <!--    <input type="text" name="location" placeholder="Location">-->
+                <!--    <input type="datetime-local" name="datetime" id="">-->
+                <!--    <input type="file" src="" alt="" name="image">-->
+                <!--    <input type="submit" value="Create">-->
+                <!--</form>-->
+                <div class="events-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date and Time</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Current Lifecycle</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($events as $event) : ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($event['title']); ?></td>
+                            <td><?php echo htmlspecialchars($event['datetime']); ?></td>
+                            <td><?php echo htmlspecialchars($event['description']); ?></td>
+                            <td>
+                                <img src="<?php echo htmlspecialchars($event['image_url']); ?>" alt="Event Image" style="max-width: 100px; height: auto;">
+                            </td>
+                            <td><?php echo htmlspecialchars($event['lifecycle']); ?></td>
+                            <td>
+                                <form action="./event.update.php" method="get">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($event['id']); ?>">
+                                    <input type="submit" value="Edit">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <?php endforeach; ?>
+            </div>
+            <div class="testi" id="testi">
+                <h1>Testimonies</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Visibility</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($testimonies as $testimony) : ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($testimony['name']); ?></td>
+                                <td><?php echo htmlspecialchars($testimony['title']); ?></td>
+                                <td><?php echo htmlspecialchars($testimony['content']); ?></td>
+                                <td>
+                                    <?php if (!$testimony['visibility']) : ?>
+                                        <form action="./testimony.show.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($testimony['id']); ?>">
+                                            <input type="submit" value="Show">
+                                        </form>
+                                    <?php else : ?>
+                                        <form action="./testimony.remove.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($testimony['id']); ?>">
+                                            <input type="submit" value="Remove">
+                                        </form>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <form action="./testimony.delete.php" method="post">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($testimony['id']); ?>">
+                                        <input type="submit" value="Delete">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="payment" id="payment">
+                <h1>Payments</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Currency</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($payments as $payment) : ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($payment['full_name']); ?></td>
+                                <td><?php echo htmlspecialchars($payment['amount']); ?></td>
+                                <td><?php echo htmlspecialchars($payment['description']); ?></td>
+                                <td><?php echo htmlspecialchars($payment['status']); ?></td>
+                                <td><?php echo htmlspecialchars($payment['currency']); ?></td>
+                                <td>
+                                    <form action="./payments.update.php" method="post">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($payment['id']); ?>">
+                                        <input type="submit" value="Update Status">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="contac" id="contac">
+                <h1>Mails</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($contacts as $contact) : ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($contact['full_name']); ?></td>
+                                <td><?php echo htmlspecialchars($contact['email']); ?></td>
+                                <td><?php echo htmlspecialchars($contact['subject']); ?></td>
+                                <td><?php echo htmlspecialchars($contact['message']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link action
+
+            const confirmLogout = confirm("Are you sure you want to log out?");
+
+            if (confirmLogout) {
+                window.location.href = this.href;
+            }
+        });
+    });
+</script>
+<script src="./admin.js"></script>

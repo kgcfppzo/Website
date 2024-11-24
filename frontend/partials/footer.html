@@ -1,0 +1,48 @@
+<footer>
+        <div class="dets">
+            <img src="./assets/images/logo.png" alt="">
+            <p class="cname">KING OF GLORY CHRISTIAN FELLOWSHIP</p>
+            <p class="ph">
+                +1 (818) 219-4320
+            </p>
+            <p class="mail">SUPPORT@KGCF.COM</p>
+        </div>
+        <div class="quick">
+            <p class="q1">Quicklinks</p>
+            <ul>
+                <li><a href="./about.php">ABOUT US</a></li>
+                <li><a href="./sermons.php">SERMONS</a></li>
+                <li><a href="./testimony.php">TESTIMONY</a></li>
+                <li><a href="./contact.php">CONTACT US</a></li>
+            </ul>
+        </div>
+        <div class="connect">
+            <p class="q1">Connect</p>
+            <span>
+                <a href="https://www.facebook.com/KGCFellowship" target="_blank"><i class='fa-brands fa-facebook'></i></a>
+                <a href="https://www.instagram.com/kgcfellowship/" target="_blank"><i class='fa-brands fa-instagram'></i></a> 
+                <a href="https://www.youtube.com/@KGCFCA" target="_blank"><i class='fa-brands fa-youtube'></i></a>
+                <a href="https://us02web.zoom.us/j/2318997958?pwd=SU1rQTlOL2hkR3hRVUFaRXZOYTQ5dz09" target="_blank"><i class='fa-duotone fa-solid fa-video'></i></a>
+            </span>
+        </div>
+    </footer>
+    <?php include './frontend/partials/preloader.html' ?>
+</body>
+</html>
+<script src="./assets/script.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration:1500,once:true,
+    });
+        
+        
+    document.addEventListener('DOMContentLoaded', () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            window.addEventListener('load', () => {
+                preloader.remove();
+            });
+        }
+    });
+</script>

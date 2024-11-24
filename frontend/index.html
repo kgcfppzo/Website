@@ -1,0 +1,82 @@
+    <section class="hero">
+        <span class="hero-con" data-aos="fade-right">
+            <p class="wel">
+                <img src="./assets/images/logo.png" alt="">
+                WELCOME TO KING OF GLORY CHRISTIAN FELLOWSHIP
+            </p>
+            <p class="cap">
+                EXPERIENCE GOD'S LOVE
+            </p>
+            <p class="summ">
+                Creating a community of believers who will rely only on God through the reading of scriptures and forging a close, personal relationship with Him, Independent of worldly or false influences.
+            </p>
+            <a href="./about.php">
+            <button class="active">
+                    LEARN MORE
+            </button>
+            </a>
+        </span>
+    </section>
+    <section id="about" class="about">
+        <p class="he">ABOUT US</p>
+        <div class="card-con">
+            <div data-aos="fade-up" class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-hand-fist"></i>
+                </div>
+                <div class="title">OUR MISSION</div>
+                <div class="subject">
+                    At KGCF, our mission is to empower believers through the Holy Spirit and God's Word to bring the light of the gospel, offering comfort and hope to all.
+                </div>
+                <div class="base">
+
+                </div>
+            </div>
+            <div data-aos="fade-up" class="card c2">
+                <div class="icon">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <div class="title">ABOUT US</div>
+                <div class="subject">
+                    We empower believers through the Holy Spirit and God's Word to bring hope and make disciples, foster personal relationships with God, and support those in need.
+                </div>
+                <div class="base">
+
+                </div>
+            </div>
+            <div data-aos="fade-up" class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-hands-holding"></i>
+                </div>
+                <div class="title">OUR VISION</div>
+                <div class="subject">
+                    To make disciples of all nations, teach believers to develop a personal relationship with God, and support the weak, the underprivileged, and the needy.
+                </div>
+                <div class="base">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const heroSection = document.querySelector('.hero');
+        const images = [
+            './assets/images/gallery/4.jpg', 
+            './assets/images/gallery/12.jpg', 
+            './assets/images/gallery/13.jpg',
+            './assets/images/gallery/40.jpg', 
+            './assets/images/gallery/12.jpg', 
+            './assets/images/gallery/25.jpg'
+        ];
+        
+        let currentIndex = 0;
+
+        function changeBackgroundImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(${images[currentIndex]})`;
+        }
+        
+        setInterval(changeBackgroundImage, 6000); // Change image every 3 seconds
+
+    </script>
+    <?php include './frontend/partials/upcoming-event.html';  ?>

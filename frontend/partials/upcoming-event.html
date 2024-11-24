@@ -1,0 +1,25 @@
+<?php if($availableEvent): ?>
+<section id="event" class="event">
+    <p class="he">UPCOMING EVENT</p>
+    <div class="eve" data-aos="fade-up">
+        <span><img src="<?php echo htmlspecialchars($availableEvent['image_url']) ?>" alt=""></span>
+        <div class="note">
+            <span>
+                <p class="heading">
+                    <?php echo htmlspecialchars($availableEvent['title']) ?>
+                </p>
+                <p class="shortnote"><?php echo $availableEvent['description'] ?></p>
+                <p class="time"><img src="" alt=""><?php
+                    include './includes/convert-date.php';
+                    echo convert($availableEvent['datetime'])?> UTC</p>
+                <p class="address"><img src="" alt=""><?php echo $availableEvent['location'] ?></p>
+                <?php if($availableEvent['lifecycle'] == 'live'): ?>
+                    <a href="./sermons.php">
+                        <button>LIVE NOW</button>
+                    </a>
+                <?php endif; ?>
+            </span>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

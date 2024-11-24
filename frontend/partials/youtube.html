@@ -1,0 +1,93 @@
+<script>
+    const API_KEY = 'AIzaSyBwXp3n7552x88Qg00at8pqD-pY9fkE90E'; // Your API key
+    const CHANNEL_NAME = 'kgcfca'; // Channel name from the link
+    const fallbackIframe = `
+        <p>Currently, there are no live broadcasts. Please check back later.</p>`;
+
+    async function getChannelID() {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${CHANNEL_NAME}&key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.items && data.items.length > 0) {
+            return data.items[0].snippet.channelId;
+        } else {
+            console.error('Channel not found');
+            return null;
+        }
+    }
+
+    async function getLiveStreamDetails(channelId) {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const liveStreamDetails = document.getElementById('live-stream-details');
+        liveStreamDetails.innerHTML = '';
+
+        if (data.items && data.items.length > 0) {
+            const liveStream = data.items[0];
+            const title = liveStream.snippet.title;
+            const videoId = liveStream.id.videoId;
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+            liveStreamDetails.innerHTML = `
+                <iframe width="560" height="315" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h2>${title}</h2>
+                <p><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch on YouTube</a></p>
+            `;
+        } else {
+            liveStreamDetails.innerHTML = fallbackIframe;
+        }
+    }
+
+    async function getChannelVideos(channelId) {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=5&type=video&order=date&key=${API_KEY}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            const channelVideos = document.getElementById('channel-videos');
+            channelVideos.innerHTML = '';
+
+            if (data.items && data.items.length > 0) {
+                data.items.forEach(video => {
+                    const title = video.snippet.title;
+                    const date = new Date(video.snippet.publishedAt).toLocaleString();
+                    const videoId = video.id.videoId;
+                    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+                    const videoElement = `
+                        <div>
+                            <h2>${title}</h2>
+                            <p>Date: ${date}</p>
+                            <iframe width="280" height="157.5" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <p><a href="${videoUrl}" target="_blank">Watch on YouTube</a></p>
+                        </div>
+                    `;
+                    channelVideos.innerHTML += videoElement;
+                });
+            } else {
+                console.log('No videos found on this channel.');
+                channelVideos.innerHTML = '<p>No videos found on this channel.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching channel videos:', error);
+            document.getElementById('channel-videos').innerHTML = '<p>Error fetching videos.</p>';
+        }
+    }
+
+    async function init() {
+        const channelId = await getChannelID();
+        if (channelId) {
+            await getLiveStreamDetails(channelId);
+            await getChannelVideos(channelId);
+        } else {
+            document.getElementById('live-stream-details').innerHTML = fallbackIframe;
+            document.getElementById('channel-videos').innerHTML = '<p>Error fetching channel details.</p>';
+        }
+    }
+
+    init();
+</script>
